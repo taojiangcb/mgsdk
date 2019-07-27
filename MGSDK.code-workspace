@@ -1,0 +1,16 @@
+{
+    "folders": [
+		{
+			"path": "/Users/taojiang/Documents/work/platOAServer"
+		},
+		{
+			"path": "."
+		},
+		{
+			"path": "/Users/taojiang/Documents/work/MgSdkCommon"
+		}
+	],
+    "settings": {
+        "git.ignoreLimitWarning": true
+    }
+}
