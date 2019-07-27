@@ -1,6 +1,7 @@
 import { NativeBase } from "./NativeBase";
 
 export class NativeWx extends NativeBase {
+
     constructor(){super()}
 
     /** 网络请求 */
@@ -25,5 +26,17 @@ export class NativeWx extends NativeBase {
     
     getItem(key: string): string {
         return wx.getStorageSync(key)
+    }
+
+    /**惰性求值 */
+    private laze_systemInfo:mgsdk.iSystemInfo;
+    getSystemInfoAsync():mgsdk.iSystemInfo {
+        if(this.laze_systemInfo) return this.laze_systemInfo;
+        let system:mgsdk.iSystemInfo = wx.getSystemInfoSync();
+        if (system.system && system.system.toLocaleLowerCase().indexOf("ios") != -1) {
+            system.isIos = true;
+        }
+        this.laze_systemInfo = system;
+        return system;
     }
 }

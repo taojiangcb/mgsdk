@@ -11,7 +11,7 @@ export class PlatBase implements mgsdk.iPlat {
     /**服务器端配置的客户端参数 appid,appscret,之类的 */
     protected mConfigCli:any;
 
-    protected mLoginOpts:iLoginResponse;
+    protected mLoginOpts:iLoginResponseOpts;
 
     internalInit():void {
         this.mInitOpts = mgsdk.initOpts;
@@ -46,19 +46,47 @@ export class PlatBase implements mgsdk.iPlat {
     get cliConfig():any {return this.mConfigCli;}
 
     /**平台登录 */
-    login(opts:iLoginResponse) {
+    login(opts:iLoginResponseOpts) {
         this.mLoginOpts = opts;
+    }
+
+    /**获取启动参数 */
+    getLaunchOptionsSync():mgsdk.iLaunchData {
+        return {}
     }
 
     //============================内部函数=======================
 
     /**发起登录请求 */
-    protected __sendLogin(platUser:mgsdk.iPlatUser) {
-        let param : mgsdk.PlatLoginParams = {
-            user:platUser,
-            platId:this.mInitOpts.platId,
-            gameId:this.mInitOpts.gameId
+    protected platLogin(platUser:mgsdk.iPlatUser,launchData?:mgsdk.iLaunchData) {
+
+        let userId:string = "";
+        let channelId:string = "";
+        let appId:string = "";
+        
+        var referrerinfo = launchData ? launchData.referrerInfo : null;
+        if(referrerinfo) {
+            if(referrerinfo.appId) {
+                appId = referrerinfo.appId;
+                channelId = launchData.scene.toString();
+            }
         }
+        
+        var queryData:any = launchData ? launchData.query : null;
+        if(queryData) {
+            if(queryData.fromUser)    userId = queryData.fromUser;
+            if(queryData.channelId)   channelId = queryData.channelId;
+        }
+
+        let param : mgsdk.PlatLoginParams = {
+            platUser:platUser,
+            platId:this.mInitOpts.platId,
+            gameId:this.mInitOpts.gameId,
+            fromChannel:channelId,
+            fromAppId:appId,
+            fromUser:userId,
+        }
+
         HttpTools.callServer(
             ENUM_SERVER.platServer,
             ENUM_SVR_FUN.login,
@@ -66,8 +94,12 @@ export class PlatBase implements mgsdk.iPlat {
             res=>{
                 if(res.success) { 
                     mgsdk.define.user = res.data;
+                    this.mLoginOpts.success && this.mLoginOpts.success(res.data);
                 }
-                else { log.error(res.msg) }
+                else { 
+                    log.error(res.msg) 
+                    this.mLoginOpts.fail && this.mLoginOpts.fail(res.msg);
+                }
             },
             ()=>{
                 var msg = `登录失败 params${JSON.stringify(param)}`

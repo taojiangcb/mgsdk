@@ -18,7 +18,7 @@ export class Define {
     sdk_server_local:string = "http://localhost:3005";               //本地之地
     mode : 0|1|2 = 0 ;                                               //开发模式
     user:mgsdk.iPlatUser = {};
-
+    cdnUrl:string = ""
     get sdk_server_url() {
         if(this.mode === 0) return this.sdk_server_local;
         else if(this.mode === 1) return this.sdk_server_dev;
