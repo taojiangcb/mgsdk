@@ -129,7 +129,7 @@ export class PlatWx extends PlatBase{
             nickName = this.mUserInfo.userInfo.nickName;
             avatar = this.mUserInfo.userInfo.avatarUrl;
         }
-        
+
         let launchData = this.getLaunchOptionsSync();
         this.platLogin({ code: this.mLoginResult.code, naickName: nickName, avatar: avatar,content: content},launchData);
     }

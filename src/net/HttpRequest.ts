@@ -10,7 +10,7 @@ export class HttpRequest extends EventDispatcher {
 		this._http = new XMLHttpRequest();
 	}
 
-	public send(url: string, data: any, method: string = "get", responseType: string = "text", headers?: Array<string>) {
+	public send(url: string, data: any, method: string = "get", responseType: "arraybuffer" | "text" = "text", headers?: Array<string>) {
 		this._responseType = responseType;
 		this._data = null;
 		var _self = this;
@@ -26,15 +26,9 @@ export class HttpRequest extends EventDispatcher {
 			else http.setRequestHeader("Content-Type", "application/json");
 		}
 		http.responseType = responseType !== "arraybuffer" ? "text" : "arraybuffer";
-		http.onerror = function (e: any) {
-			_self._onError(e);
-		}
-		http.onabort = function (e: any) {
-			_self._onAbort(e);
-		}
-		http.onprogress = function (e: any) {
-			_self._onProgress(e);
-		}
+		http.onerror = function (e: any) { _self._onError(e); }
+		http.onabort = function (e: any) { _self._onAbort(e); }
+		http.onprogress = function (e: any) { _self._onProgress(e); }
 		http.onload = function (e: any) {
 			_self._onLoad(e);
 		}
@@ -72,8 +66,7 @@ export class HttpRequest extends EventDispatcher {
 		this.clear();
 		this.event(/*laya.events.Event.ERROR*/"error", message);
 	}
-
-
+	
 	/**
 	*@private
 	*请求成功完成的处理函数。

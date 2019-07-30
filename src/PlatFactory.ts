@@ -4,6 +4,8 @@ import { PlatBase } from "./plat/PlatBase";
 import { PlatDebug } from "./plat/PlatDebug";
 import { NativeWx } from "./native/NativeWx";
 import { NativeDebug } from "./native/NativeDebug";
+import { SdkLife } from "./life/SdkLife";
+import { LifeWx } from "./life/LifeWx";
 
 export class PlatFactory {
     static createFactoryInstance(platId:number):PlatBase {
@@ -23,5 +25,15 @@ export class PlatFactory {
                 default:
                     return new NativeDebug();
         }
+    }
+
+    static createLifeInstance(platId:number,lifeOpts?:mgsdk.PlatLifeOpts) {
+        switch(platId) {
+            case PLAT_IDS.WX:
+                return new LifeWx(lifeOpts);
+            default:
+                return new SdkLife(lifeOpts);
+        }
+        return new SdkLife();
     }
 }

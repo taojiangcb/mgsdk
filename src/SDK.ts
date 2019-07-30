@@ -8,18 +8,16 @@ import { ObjectUtil } from "./utils/ObjectUtil";
 export class SDK {
     
     private mInitOpts:mgsdk.PlatInitOps;
-    
-    private mLifeOpts:mgsdk.PlatLifeOpts;
-
     private mDefine:mgsdk.iDefine;
 
     private mPlat:PlatBase;
-
     private mNative:NativeBase;
+    private mLife:mgsdk.iSdkLife;
 
     constructor() {}
+
+
     /**
-     * 
      * @param platId        平台定义的id
      * @param gameId        平台定义的游戏id
      * @param success       成功之后的回调
@@ -37,20 +35,19 @@ export class SDK {
 
         /**sdk 的运行模式  */
         this.mDefine.mode = opts.mode
-
         this.mInitOpts = opts;
-        this.mLifeOpts = lifeOpts;
 
         /**log 初始化 */
         log.internalInit();
         /** 创建平台各个对象初始化 */
+        this.mLife = PlatFactory.createLifeInstance(opts.platId,lifeOpts);          //生命周期管理
         this.mPlat = PlatFactory.createFactoryInstance(opts.platId);                //平台
         this.mNative = PlatFactory.createNativeInstance(opts.platId);               //平台的环境
         /**初始化 */
         this.mPlat.internalInit();
     }
 
-    get lifeOpts() {return this.mLifeOpts}                                          //生命周期参数
+    get sdkLife() {return this.mLife}                                               //生命周期管理
     get initOpts() {return this.mInitOpts}                                          //平台初始化参数
     get user() { return this.mDefine.user; }                                        //平台用户
     get setting() { return this.mDefine.setting; }                                  //盈利参数设置
