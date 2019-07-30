@@ -13,7 +13,7 @@ export class SDK {
     private mPlat:PlatBase;
     private mNative:NativeBase;
     private mLife:mgsdk.iSdkLife;
-
+    private mShare:mgsdk.iShare;
     constructor() {}
 
 
@@ -40,13 +40,16 @@ export class SDK {
         /**log 初始化 */
         log.internalInit();
         /** 创建平台各个对象初始化 */
+        this.mShare = PlatFactory.createShareInstance(opts.platId);
         this.mLife = PlatFactory.createLifeInstance(opts.platId,lifeOpts);          //生命周期管理
         this.mPlat = PlatFactory.createFactoryInstance(opts.platId);                //平台
         this.mNative = PlatFactory.createNativeInstance(opts.platId);               //平台的环境
+      
         /**初始化 */
         this.mPlat.internalInit();
     }
 
+    get share() {return this.mShare}
     get sdkLife() {return this.mLife}                                               //生命周期管理
     get initOpts() {return this.mInitOpts}                                          //平台初始化参数
     get user() { return this.mDefine.user; }                                        //平台用户

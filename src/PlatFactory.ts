@@ -6,6 +6,8 @@ import { NativeWx } from "./native/NativeWx";
 import { NativeDebug } from "./native/NativeDebug";
 import { SdkLife } from "./life/SdkLife";
 import { LifeWx } from "./life/LifeWx";
+import { ShareWx } from "./share/ShareWx";
+import { ShareBase } from "./share/ShareBase";
 
 export class PlatFactory {
     static createFactoryInstance(platId:number):PlatBase {
@@ -14,7 +16,6 @@ export class PlatFactory {
                 return new PlatWx();
             default:
                 return new PlatDebug();
-
         }
     }
 
@@ -35,5 +36,15 @@ export class PlatFactory {
                 return new SdkLife(lifeOpts);
         }
         return new SdkLife();
+    }
+
+    static createShareInstance(platId) {
+        switch(platId) {
+            case PLAT_IDS.WX:
+                return new ShareWx();
+            default:
+                return new ShareBase();
+        }
+        return new ShareBase();
     }
 }
