@@ -9,6 +9,7 @@ class Log {
 
     error(msg:any,...args):void { console.error(msg,args); }
 
+    
     log(msg:any,...args) {
         if(this.showLog) {
             console.log(msg,args);
