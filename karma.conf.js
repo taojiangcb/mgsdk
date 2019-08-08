@@ -2,72 +2,72 @@
 // Generated on Tue May 21 2019 14:05:55 GMT+0800 (中国标准时间)
 var path = require("path");
 
-module.exports = function (config) {
-  config.set({
+module.exports = function(config) {
+    config.set({
 
-    // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '',
+        // base path that will be used to resolve all patterns (eg. files, exclude)
+        basePath: '',
 
-    plugins: [
-      'karma-mocha',
-      'karma-coverage',
-      'karma-chrome-launcher',
-    ],
-    // frameworks to use
-    // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha'],
-
-
-    // list of files / patterns to load in the browser
-    files: [
-      './out/test/*.js'
-    ],
+        plugins: [
+            'karma-mocha',
+            'karma-coverage',
+            'karma-chrome-launcher',
+        ],
+        // frameworks to use
+        // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
+        frameworks: ['mocha'],
 
 
-    // list of files / patterns to exclude
-    exclude: [
-    ],
+        // list of files / patterns to load in the browser
+        files: [
+            './out/mgsdk.js',
+            './test/*.test.js'
+        ],
 
-    // test results reporter to use
-    // possible values: 'dots', 'progress'
-    // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    // reporters: ['progress'],
-    reporters: ['progress','coverage'],
-    
-    // preprocess matching files before serving them to the browser
-    // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-    preprocessors: {
-      './out/test/*.js':['coverage']
-    },
 
-    coverageReporter: {
-      type : 'html',
-      dir : 'coverage/'
-    },
+        // list of files / patterns to exclude
+        exclude: [],
 
-    // web server port
-    port: 9876,
+        // test results reporter to use
+        // possible values: 'dots', 'progress'
+        // available reporters: https://npmjs.org/browse/keyword/karma-reporter
+        // reporters: ['progress'],
+        reporters: ['progress', 'coverage'],
 
-    // enable / disable colors in the output (reporters and logs)
-    colors: true,
+        // preprocess matching files before serving them to the browser
+        // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
+        preprocessors: {
+            './test/*.test.js': ['coverage']
+        },
 
-    // level of logging
-    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_INFO,
+        coverageReporter: {
+            type: 'html',
+            dir: 'coverage/'
+        },
 
-    // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: true,
+        // web server port
+        port: 9876,
 
-    // start these browsers
-    // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+        // enable / disable colors in the output (reporters and logs)
+        colors: true,
 
-    // Continuous Integration mode
-    // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false,
+        // level of logging
+        // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
+        logLevel: config.LOG_INFO,
 
-    // Concurrency level
-    // how many browser should be started simultaneous
-    concurrency: Infinity
-  })
+        // enable / disable watching file and executing tests whenever any file changes
+        autoWatch: true,
+
+        // start these browsers
+        // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
+        browsers: ['Chrome'],
+
+        // Continuous Integration mode
+        // if true, Karma captures browsers, runs the tests and exits
+        singleRun: false,
+
+        // Concurrency level
+        // how many browser should be started simultaneous
+        concurrency: Infinity
+    })
 }

@@ -81,12 +81,13 @@ export class PlatWx extends PlatBase{
                     btnSkin[key] = this.mLoginOpts.btnStyle[key];
                 }
             }
-
+            
             if (btnSkin.skin.indexOf("http") == -1) {
                 var img = wx.createImage();
                 img.src = btnSkin.skin;
                 btnSkin.skin = img.src;
             }
+
             log.log(btnSkin)
             this.mBtn = wx.createUserInfoButton({
                 type: 'image',

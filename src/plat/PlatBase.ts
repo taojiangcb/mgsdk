@@ -25,15 +25,24 @@ export class PlatBase implements mgsdk.iPlat {
                 this.mInitOpts.fail(msg);
             })
         }
+        else {
+            this.getPlatInfo();
+        }
     }
 
     protected getPlatInfo() {
         HttpTools.callServer(ENUM_SERVER.platServer,
             ENUM_SVR_FUN.getPlatInfo,
-            {paltId:this.mInitOpts.platId,gameId:this.mInitOpts.gameId},
+            {platId:this.mInitOpts.platId,gameId:this.mInitOpts.gameId},
             res=>{
-                this.mConfigCli = res.data.cli_config;
-                this.mInitOpts.success && this.mInitOpts.success(res);
+                if(res.success) {
+                    this.mConfigCli = res.data.cli_config;
+                    this.mInitOpts.success && this.mInitOpts.success(res);
+                }
+                else {
+                    var msg:string = `get platInfo fail == paltId:${this.mInitOpts.platId},gameId:${this.mInitOpts.gameId}`;
+                    this.mInitOpts.fail && this.mInitOpts.fail(msg);
+                }
             },
             ()=>{
                 var msg:string = `get platInfo fail == paltId:${this.mInitOpts.platId},gameId:${this.mInitOpts.gameId}`;
@@ -88,7 +97,7 @@ export class PlatBase implements mgsdk.iPlat {
         }
 
         HttpTools.callServer(
-            ENUM_SERVER.platServer,
+            ENUM_SERVER.userServer,
             ENUM_SVR_FUN.login,
             param,
             res=>{

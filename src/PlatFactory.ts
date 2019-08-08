@@ -35,7 +35,6 @@ export class PlatFactory {
             default:
                 return new SdkLife(lifeOpts);
         }
-        return new SdkLife();
     }
 
     static createShareInstance(platId) {
@@ -45,6 +44,5 @@ export class PlatFactory {
             default:
                 return new ShareBase();
         }
-        return new ShareBase();
     }
 }

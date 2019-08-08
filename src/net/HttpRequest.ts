@@ -68,8 +68,8 @@ export class HttpRequest extends EventDispatcher {
 	}
 	
 	/**
-	*@private
-	*请求成功完成的处理函数。
+	* @private
+	* 请求成功完成的处理函数。
 	*/
 	complete() {
 		this.clear();
@@ -88,10 +88,10 @@ export class HttpRequest extends EventDispatcher {
 		}
 		flag && this.event(/*laya.events.Event.COMPLETE*/"complete", (this._data instanceof Array) ? [this._data] : this._data);
 	}
-
+	
 	/**
-	*@private
-	*清除当前请求。
+	* @private
+	* 清除当前请求。
 	*/
 	clear() {
 		var http = this._http;

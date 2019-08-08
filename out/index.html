@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./mgsdk.js"></script>
+</head>
+
+<body>
+    <div id="example"></div>
+    <input type="button" value="init" onclick="initHandler()" />
+    <input type="button" value="send ws hello" onclick="say_hello()" />
+    <script type="text/javascript">
+        function initHandler() {
+            console.log(`initHandler-------`)
+            let sdkOpt = {
+                platId: 1000,
+                gameId: 10000,
+                success: (res) => {
+                    console.log(JSON.stringify(res));
+                },
+                fail: msg => {},
+                mode: 0
+            }
+            mgsdk.init(sdkOpt)
+        }
+
+        function say_hello() {
+            let protocol = {
+                procoBody: {
+                    server: "HELLO",
+                    action: "say_hello",
+                }
+            }
+            mgsdk.ws.send(protocol, responseData => {
+                console.log(`server say ${JSON.stringify(responseData)}`);
+            })
+        }
+    </script>
+</body>
+
+</html>
